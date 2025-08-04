@@ -4,15 +4,17 @@
 
 void push(int x);
 void pop();
+int size();
+int empty();
 
 int *stack;
-int rear = -1;
+int top = -1;
 int length;
 int main(void) {
     scanf("%d", &length);
     stack = malloc(sizeof(int) * length);
 
-    // push {x}, pop 이외의 입력은 모두 종료
+    // push {x}, pop, size, empty 이외의 입력은 모두 종료
     while (1) {
         char cmd[11];
         scanf("%10s", cmd);
@@ -22,23 +24,35 @@ int main(void) {
             push(src);
         } else if (strcmp(cmd, "pop") == 0) {
             pop();
-        } else break;
+        } else if (strcmp(cmd, "size") == 0) {
+            printf("%d\n", size());
+        } else if (strcmp(cmd, "empty") == 0) {
+            printf("%d\n", empty());
+        }else break;
     }
     free(stack);
 }
 
 void push(int x) {
-    if (rear >= length-1) {
+    if (size() == length) {
         printf("Stack is full\n");
     } else {
-        stack[++rear] = x;
+        stack[++top] = x;
     }
 }
 
 void pop() {
-    if (rear <= -1) {
+    if (empty()) {
         printf("Stack is empty\n");
     } else {
-        printf("%d\n", stack[rear--]);
+        printf("%d\n", stack[top--]);
     }
+}
+
+int size() {
+    return top+1;
+}
+
+int empty() {
+    return size()?0:1;
 }
