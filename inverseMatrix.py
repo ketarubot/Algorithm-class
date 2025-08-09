@@ -3,10 +3,11 @@ from decimal import Decimal
 # 상수배 행렬
 def scalar_mult_matrix(A, k):
     temp_matrix = []
+    k = Decimal(str(k))
     for row in A:
         temp = []
         for el in row:
-            temp.append(Decimal(str(el))*Decimal(str(k)))
+            temp.append(Decimal(str(el))*k)
         temp_matrix.append(temp)
     return temp_matrix
 
@@ -99,12 +100,13 @@ def clean_matrix(matrix, tol=Decimal("1e-15")):
     for row in matrix:
         new_row = []
         for x in row:
+            x = Decimal(str(x))
             if abs(x) < tol:
-                new_row.append(Decimal("0"))
+                new_row.append(0)
             elif abs(x - Decimal("1")) < tol:
-                new_row.append(Decimal("1"))
+                new_row.append(1)
             else:
-                new_row.append(x)
+                new_row.append('%.6f'%float(x))
         cleaned.append(new_row)
     return cleaned
 
